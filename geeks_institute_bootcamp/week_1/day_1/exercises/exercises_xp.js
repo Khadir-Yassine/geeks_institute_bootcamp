@@ -20,6 +20,11 @@ for (let i = 0; i < people.length; i++) {
 
 }
 // ===== Exercise 2
+const colors = ["Midnight Blue", "Forest Green", "Burnt Orange", "Slate", "Crimson"];
+
+for (let i = 0; i < colors.length; i++) {
+    console.log(`My #${i + 1} choice is ${colors[i]}`);
+}
 
 // ===== Exercise 3
 
