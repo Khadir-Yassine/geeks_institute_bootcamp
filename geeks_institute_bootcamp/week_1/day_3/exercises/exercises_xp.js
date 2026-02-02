@@ -79,7 +79,7 @@ const lastnameInput = document.querySelector('[name="lastname"]');
 console.log('First name input (by name attribute):', firstnameInput);
 console.log('Last name input (by name attribute):', lastnameInput);
 
-form.addEventListener('submit', function(event) {
+volumeForm.addEventListener('submit', function(event) {
     event.preventDefault();
     
     const firstNameValue = fnameInput.value;
@@ -131,7 +131,7 @@ const paragraph = document.querySelector('p');
 paragraph.addEventListener('mouseover', highlight);
 paragraph.addEventListener('mouseout', returnItemsToDefault);
 // ===== Exercise 4
-const form = document.getElementById('MyForm');
+const volumeForm = document.getElementById('MyForm');
 const radiusInput = document.getElementById('radius');
 const volumeInput = document.getElementById('volume');
 
