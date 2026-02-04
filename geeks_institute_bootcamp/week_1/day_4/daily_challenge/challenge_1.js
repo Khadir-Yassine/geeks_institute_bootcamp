@@ -33,7 +33,6 @@ const cloneGroceries = () => {
   console.log("shopping:", shopping);
 };
 
-/* Invoke functions */
 displayGroceries();
 cloneGroceries();
 
