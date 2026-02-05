@@ -120,21 +120,28 @@ console.log(convertToGramsArrow(2.5));
   document.body.appendChild(container);
 })(3, "Alex", "Tokyo", "Software Engineer");
 // ===== Exercise 7
-((userName) => {
-  const userDiv = document.createElement('div');
-  userDiv.style.display = 'flex';
-  userDiv.style.alignItems = 'center';
-  userDiv.style.gap = '10px';
-  const nameSpan = document.createElement('span');
-  nameSpan.textContent = `Welcome, ${userName}`;
-  const profilePic = document.createElement('img');
-  profilePic.src = ''; 
-  profilePic.style.borderRadius = '50%';
-  profilePic.alt = 'Profile Picture';
-  userDiv.appendChild(nameSpan);
-  userDiv.appendChild(profilePic);
-  document.getElementById('navbar').appendChild(userDiv);
+(function(name){
+  const navbar = document.querySelector("nav");
+  const userDiv = document.createElement("div");
+  const img = document.createElement("img");
+  const text = document.createElement("span");
+
+  img.src = "image" + name;
+  img.style.width = "40px";
+  img.style.height = "40px";
+  img.style.borderRadius = "50%";
+  img.style.marginRight = "10px";
+
+  text.textContent = name;
+
+  userDiv.style.display = "flex";
+  userDiv.style.alignItems = "center";
+
+  userDiv.appendChild(img);
+  userDiv.appendChild(text);
+  navbar.appendChild(userDiv);
 })("John");
+
 // ===== Exercise 8
 // PART I
 function makeJuice(size) {
