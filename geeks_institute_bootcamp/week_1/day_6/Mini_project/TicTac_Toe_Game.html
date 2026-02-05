@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Tic Tac Toe (Easy / Hard)</title>
+  <style>
+    body { font-family: Arial; text-align: center; background:#2f9bff; color:white; }
+    h1 { font-size: 42px; }
+    .row { margin: 10px; }
+    button, select { padding: 10px 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+    .board { width: 330px; margin: 20px auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+    .cell {
+      width: 110px; height: 110px;
+      border: 4px solid rgba(0,0,0,0.55);
+      display:flex; align-items:center; justify-content:center;
+      font-size: 70px; cursor:pointer; user-select:none;
+    }
+    #restart { display:none; margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+  <h1>Tic Tac Toe Game</h1>
+
+  <div class="row">
+    <button id="btnX">Play as X</button>
+    <button id="btnO">Play as O</button>
+
+    <select id="level">
+      <option value="easy">Easy (random)</option>
+      <option value="hard">Hard (smart)</option>
+    </select>
+  </div>
+
+  <div class="board">
+    <div class="cell" id="c0"></div>
+    <div class="cell" id="c1"></div>
+    <div class="cell" id="c2"></div>
+    <div class="cell" id="c3"></div>
+    <div class="cell" id="c4"></div>
+    <div class="cell" id="c5"></div>
+    <div class="cell" id="c6"></div>
+    <div class="cell" id="c7"></div>
+    <div class="cell" id="c8"></div>
+  </div>
+
+  <h2 id="msg">Choose X or O, then play.</h2>
+  <button id="restart">Restart</button>
+
+  <script>
+    // WIN COMBOS
+    var winCombos = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[6,4,2]
+    ];
+
+    // ELEMENTS
+    var cells = [
+      document.getElementById("c0"),
+      document.getElementById("c1"),
+      document.getElementById("c2"),
+      document.getElementById("c3"),
+      document.getElementById("c4"),
+      document.getElementById("c5"),
+      document.getElementById("c6"),
+      document.getElementById("c7"),
+      document.getElementById("c8")
+    ];
+
+    var msg = document.getElementById("msg");
+    var restartBtn = document.getElementById("restart");
+    var levelSelect = document.getElementById("level");
+
+    var btnX = document.getElementById("btnX");
+    var btnO = document.getElementById("btnO");
+
+    // GAME VARIABLES
+    var board = ["","","","","","","","",""]; // 9 boxes
+    var player = "X";
+    var ai = "O";
+    var gameOver = false;
+
+    // ---------- BASIC FUNCTIONS ----------
+    function drawBoard() {
+      for (var i = 0; i < 9; i++) {
+        cells[i].innerHTML = board[i];
+      }
+    }
+
+    function setMessage(text) {
+      msg.innerHTML = text;
+    }
+
+    function showRestart(show) {
+      if (show) restartBtn.style.display = "inline-block";
+      else restartBtn.style.display = "none";
+    }
+
+    function isEmpty(i) {
+      return board[i] === "";
+    }
+
+    function getEmptyCells() {
+      var empty = [];
+      for (var i = 0; i < 9; i++) {
+        if (board[i] === "") empty.push(i);
+      }
+      return empty;
+    }
+
+    function checkWinner(symbol) {
+      for (var i = 0; i < winCombos.length; i++) {
+        var a = winCombos[i][0];
+        var b = winCombos[i][1];
+        var c = winCombos[i][2];
+
+        if (board[a] === symbol && board[b] === symbol && board[c] === symbol) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function checkTie() {
+      // if no empty cells and no winner => tie
+      return getEmptyCells().length === 0;
+    }
+
+    function endGame(text) {
+      gameOver = true;
+      setMessage(text);
+      showRestart(true);
+    }
+
+    function placeMove(index, symbol) {
+      if (gameOver) return false;
+      if (!isEmpty(index)) return false;
+
+      board[index] = symbol;
+      drawBoard();
+      return true;
+    }
+
+    // ---------- EASY AI (RANDOM) ----------
+    function aiEasyMove() {
+      var empty = getEmptyCells();
+      var randomIndex = empty[Math.floor(Math.random() * empty.length)];
+      placeMove(randomIndex, ai);
+    }
+
+    // ---------- HARD AI (WIN OR BLOCK) ----------
+    // This hard AI is "smart": first try win, then block, else take center, else random.
+    function findBestMove(symbol) {
+      // Try each empty place, if it creates winner => return that index
+      var empty = getEmptyCells();
+      for (var i = 0; i < empty.length; i++) {
+        var idx = empty[i];
+
+        // try
+        board[idx] = symbol;
+        var win = checkWinner(symbol);
+        // undo
+        board[idx] = "";
+
+        if (win) return idx;
+      }
+      return -1;
+    }
+
+    function aiHardMove() {
+      // 1) If AI can win, do it
+      var winMove = findBestMove(ai);
+      if (winMove !== -1) {
+        placeMove(winMove, ai);
+        return;
+      }
+
+      // 2) If player can win next, block
+      var blockMove = findBestMove(player);
+      if (blockMove !== -1) {
+        placeMove(blockMove, ai);
+        return;
+      }
+
+      // 3) Take center if free
+      if (isEmpty(4)) {
+        placeMove(4, ai);
+        return;
+      }
+
+      // 4) Else random
+      aiEasyMove();
+    }
+
+    function aiPlay() {
+      if (gameOver) return;
+
+      var level = levelSelect.value;
+
+      if (level === "easy") aiEasyMove();
+      else aiHardMove();
+
+      // after AI move, check result
+      if (checkWinner(ai)) {
+        endGame("Computer wins!");
+        return;
+      }
+      if (checkTie()) {
+        endGame("Tie game!");
+        return;
+      }
+
+      setMessage("Your turn.");
+    }
+
+    // ---------- CLICK ON CELL ----------
+    function cellClick(index) {
+      if (gameOver) return;
+
+      var ok = placeMove(index, player);
+      if (!ok) return;
+
+      // after player move, check result
+      if (checkWinner(player)) {
+        endGame("You win!");
+        return;
+      }
+      if (checkTie()) {
+        endGame("Tie game!");
+        return;
+      }
+
+      setMessage("Computer turn...");
+      setTimeout(aiPlay, 200);
+    }
+
+    // attach click events
+    for (var i = 0; i < 9; i++) {
+      (function(iCopy){
+        cells[iCopy].addEventListener("click", function() {
+          cellClick(iCopy);
+        });
+      })(i);
+    }
+
+    // ---------- RESTART ----------
+    function restartGame() {
+      board = ["","","","","","","","",""];
+      gameOver = false;
+      drawBoard();
+      showRestart(false);
+      setMessage("Your turn.");
+
+      // If player chose O, AI starts
+      if (player === "O") {
+        setMessage("Computer turn...");
+        setTimeout(aiPlay, 200);
+      }
+    }
+
+    restartBtn.addEventListener("click", restartGame);
+
+    // ---------- CHOOSE SYMBOL ----------
+    btnX.addEventListener("click", function() {
+      player = "X";
+      ai = "O";
+      restartGame();
+    });
+
+    btnO.addEventListener("click", function() {
+      player = "O";
+      ai = "X";
+      restartGame();
+    });
+
+    // start view
+    drawBoard();
+    showRestart(false);
+  </script>
+
+</body>
+</html>
