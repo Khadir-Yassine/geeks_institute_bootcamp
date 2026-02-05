@@ -46,7 +46,6 @@
       justify-content: center;
     }
 
-    /* CARD */
     .card{
       width: 260px;
       background: rgba(90, 227, 233, 0.85);
@@ -103,7 +102,6 @@
   <div id="cards" class="container"></div>
 
   <script>
-    // DATA (ASSETS)
     var robots = [
       { id: 1, name: 'Leanne Graham', username: 'Bret', email: 'Sincere@april.biz', image: 'https://robohash.org/1?200x200' },
       { id: 2, name: 'Ervin Howell', username: 'Antonette', email: 'Shanna@melissa.tv', image: 'https://robohash.org/2?200x200' },
@@ -117,13 +115,10 @@
       { id: 10, name: 'Clementina DuBuque', username: 'Moriah.Stanton', email: 'Rey.Padberg@karina.biz', image: 'https://robohash.org/10?200x200' }
     ];
 
-    // DOM ELEMENTS
     var cardsDiv = document.getElementById("cards");
     var searchInput = document.getElementById("search");
 
-    // FUNCTION: create one card
     function createCard(robot) {
-      // create elements
       var card = document.createElement("div");
       card.className = "card";
 
@@ -142,7 +137,6 @@
       email.className = "email";
       email.innerHTML = robot.email;
 
-      // append
       avatarBox.appendChild(img);
       card.appendChild(avatarBox);
       card.appendChild(name);
@@ -151,22 +145,17 @@
       return card;
     }
 
-    // FUNCTION: display cards
     function displayRobots(list) {
-      // clear old cards
       cardsDiv.innerHTML = "";
 
-      // loop and add cards
       for (var i = 0; i < list.length; i++) {
         var card = createCard(list[i]);
         cardsDiv.appendChild(card);
       }
     }
 
-    // FIRST LOAD
     displayRobots(robots);
 
-    // FILTER ON SEARCH
     searchInput.addEventListener("input", function() {
       var text = searchInput.value.toLowerCase();
 
