@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>RoboFriends</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: #5b47d6;
+      background-image: url("https://github.com/devtlv/studentsGitHub/blob/master/JS/Week%204/Day5/Mini%20Projects/Mini%20Project%201%20(Robots)/circuit-pattern.png?raw=true");
+      color: #0b2a44;
+    }
+
+    .top{
+      background:#5be37a;
+      padding: 18px 20px;
+      display:flex;
+      align-items:center;
+      gap: 20px;
+    }
+
+    .logo{
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .searchBox{
+      flex:1;
+      max-width: 700px;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 6px;
+      border: 2px solid rgba(0,0,0,0.2);
+      outline: none;
+    }
+
+    .container{
+      width: 92%;
+      margin: 30px auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    /* CARD */
+    .card{
+      width: 260px;
+      background: rgba(90, 227, 233, 0.85);
+      border-radius: 10px;
+      padding: 20px 10px;
+      text-align:center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
+
+    .avatarBox{
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 10px auto;
+      border-radius: 50%;
+      background: #2b3553;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    .avatarBox img{
+      width: 160px;
+      height: 160px;
+    }
+
+    .name{
+      margin: 10px 0 5px 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .email{
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top">
+    <div class="logo">ROBOFRIENDS</div>
+
+    <input
+      id="search"
+      class="searchBox"
+      type="text"
+      placeholder="Search Robots"
+    />
+  </div>
+
+  <div id="cards" class="container"></div>
+
+  <script>
+    // DATA (ASSETS)
+    var robots = [
+      { id: 1, name: 'Leanne Graham', username: 'Bret', email: 'Sincere@april.biz', image: 'https://robohash.org/1?200x200' },
+      { id: 2, name: 'Ervin Howell', username: 'Antonette', email: 'Shanna@melissa.tv', image: 'https://robohash.org/2?200x200' },
+      { id: 3, name: 'Clementine Bauch', username: 'Samantha', email: 'Nathan@yesenia.net', image: 'https://robohash.org/3?200x200' },
+      { id: 4, name: 'Patricia Lebsack', username: 'Karianne', email: 'Julianne.OConner@kory.org', image: 'https://robohash.org/4?200x200' },
+      { id: 5, name: 'Chelsey Dietrich', username: 'Kamren', email: 'Lucio_Hettinger@annie.ca', image: 'https://robohash.org/5?200x200' },
+      { id: 6, name: 'Mrs. Dennis Schulist', username: 'Leopoldo_Corkery', email: 'Karley_Dach@jasper.info', image: 'https://robohash.org/6?200x200' },
+      { id: 7, name: 'Kurtis Weissnat', username: 'Elwyn.Skiles', email: 'Telly.Hoeger@billy.biz', image: 'https://robohash.org/7?200x200' },
+      { id: 8, name: 'Nicholas Runolfsdottir V', username: 'Maxime_Nienow', email: 'Sherwood@rosamond.me', image: 'https://robohash.org/8?200x200' },
+      { id: 9, name: 'Glenna Reichert', username: 'Delphine', email: 'Chaim_McDermott@dana.io', image: 'https://robohash.org/9?200x200' },
+      { id: 10, name: 'Clementina DuBuque', username: 'Moriah.Stanton', email: 'Rey.Padberg@karina.biz', image: 'https://robohash.org/10?200x200' }
+    ];
+
+    // DOM ELEMENTS
+    var cardsDiv = document.getElementById("cards");
+    var searchInput = document.getElementById("search");
+
+    // FUNCTION: create one card
+    function createCard(robot) {
+      // create elements
+      var card = document.createElement("div");
+      card.className = "card";
+
+      var avatarBox = document.createElement("div");
+      avatarBox.className = "avatarBox";
+
+      var img = document.createElement("img");
+      img.src = robot.image;
+      img.alt = robot.name;
+
+      var name = document.createElement("h3");
+      name.className = "name";
+      name.innerHTML = robot.name;
+
+      var email = document.createElement("p");
+      email.className = "email";
+      email.innerHTML = robot.email;
+
+      // append
+      avatarBox.appendChild(img);
+      card.appendChild(avatarBox);
+      card.appendChild(name);
+      card.appendChild(email);
+
+      return card;
+    }
+
+    // FUNCTION: display cards
+    function displayRobots(list) {
+      // clear old cards
+      cardsDiv.innerHTML = "";
+
+      // loop and add cards
+      for (var i = 0; i < list.length; i++) {
+        var card = createCard(list[i]);
+        cardsDiv.appendChild(card);
+      }
+    }
+
+    // FIRST LOAD
+    displayRobots(robots);
+
+    // FILTER ON SEARCH
+    searchInput.addEventListener("input", function() {
+      var text = searchInput.value.toLowerCase();
+
+      var filtered = [];
+      for (var i = 0; i < robots.length; i++) {
+        var robotName = robots[i].name.toLowerCase();
+        if (robotName.includes(text)) {
+          filtered.push(robots[i]);
+        }
+      }
+
+      displayRobots(filtered);
+    });
+  </script>
+
+</body>
+</html>
