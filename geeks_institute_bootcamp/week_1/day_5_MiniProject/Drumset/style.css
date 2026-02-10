@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: url("sounds/image.png")
+    no-repeat center/cover;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(9, 120px);
+  gap: 20px;
+  padding: 30px;
+}
+
+.key {
+  border: 2px solid gold;
+  height: 110px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  transition: transform 0.05s;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.key kbd {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.key span {
+  margin-top: 6px;
+  font-size: 14px;
+  color: gold;
+  letter-spacing: 1px;
+}
+
+.key.playing {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+}
