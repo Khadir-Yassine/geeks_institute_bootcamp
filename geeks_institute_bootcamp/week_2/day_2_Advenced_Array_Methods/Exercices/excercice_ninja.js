@@ -53,3 +53,57 @@ let totalHumanYearsReduce = data.reduce(function (total, animal) {
 }, 0);
 
 console.log("Reduce result:", totalHumanYearsReduce);
+
+// EXERRCICE 2 :
+const cleanedEmail = ' cannotfillemailformcorrectly@gmail.com '.trim();
+
+// EXERRCICE 3 :
+const users = [
+  { firstName: 'Bradley', lastName: 'Bouley', role: 'Full Stack Resident' },
+  { firstName: 'Chloe', lastName: 'Alnaji', role: 'Full Stack Resident' },
+  { firstName: 'Jonathan', lastName: 'Baughn', role: 'Enterprise Instructor' },
+  { firstName: 'Michael', lastName: 'Herman', role: 'Lead Instructor' },
+  { firstName: 'Robert', lastName: 'Hajek', role: 'Full Stack Resident' },
+  { firstName: 'Wes', lastName: 'Reid', role: 'Instructor'},
+  { firstName: 'Zach', lastName: 'Klabunde', role: 'Instructor'}
+];
+
+let usersObject = {};
+
+for (let i = 0; i < users.length; i++) {
+  let fullName = users[i].firstName + " " + users[i].lastName;
+  usersObject[fullName] = users[i].role;
+}
+
+console.log(usersObject);
+
+// EXERRCICE 4 :
+const letters = ['x', 'y', 'z', 'z'];
+
+// ===== 1) Using a FOR loop =====
+let count1 = {};
+
+for (let i = 0; i < letters.length; i++) {
+  let letter = letters[i];
+
+  if (count1[letter]) {
+    count1[letter] = count1[letter] + 1;
+  } else {
+    count1[letter] = 1;
+  }
+}
+
+console.log("For loop:", count1);
+
+// ===== 2) Using reduce() =====
+let count2 = letters.reduce(function(obj, letter) {
+  if (obj[letter]) {
+    obj[letter] = obj[letter] + 1;
+  } else {
+    obj[letter] = 1;
+  }
+  return obj;
+}, {});
+
+console.log("Reduce:", count2);
+
