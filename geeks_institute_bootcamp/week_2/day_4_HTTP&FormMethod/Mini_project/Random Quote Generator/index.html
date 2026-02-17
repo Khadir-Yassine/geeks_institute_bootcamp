@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Quote Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <button id="generateBtn" class="btn primary">Generate Quote</button>
+
+    <section id="quoteCard" class="card hidden">
+      <div class="quoteRow">
+        <div class="bigQuoteMark">“</div>
+
+        <div class="quoteContent">
+          <p id="quoteText" class="quoteText"></p>
+          <p id="quoteAuthor" class="quoteAuthor"></p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="countSpacesBtn" class="btn">Chars (with spaces)</button>
+        <button id="countNoSpacesBtn" class="btn">Chars (no spaces)</button>
+        <button id="countWordsBtn" class="btn">Words</button>
+        <button id="likeBtn" class="btn">Like 👍</button>
+      </div>
+
+      <p id="info" class="info"></p>
+
+      <div id="nav" class="nav hidden">
+        <button id="prevBtn" class="btn">Previous</button>
+        <button id="nextBtn" class="btn">Next</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Add a quote</h2>
+      <form id="addForm" class="form">
+        <label>
+          Quote
+          <textarea id="newQuote" required placeholder="Write the quote..."></textarea>
+        </label>
+
+        <label>
+          Author
+          <input id="newAuthor" type="text" required placeholder="Author name..." />
+        </label>
+
+        <button class="btn primary" type="submit">Add Quote</button>
+      </form>
+      <p id="addMsg" class="info"></p>
+    </section>
+
+    <section class="card">
+      <h2>Filter by author</h2>
+      <form id="filterForm" class="form row">
+        <input id="filterAuthor" type="text" required placeholder="Type author name..." />
+        <button class="btn primary" type="submit">Filter</button>
+        <button id="clearFilterBtn" class="btn" type="button">Clear</button>
+      </form>
+      <p id="filterMsg" class="info"></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

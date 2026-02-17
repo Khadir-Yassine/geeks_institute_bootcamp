@@ -1,0 +1,113 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #b8a6a2;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.app {
+  width: min(720px, 95vw);
+  display: grid;
+  gap: 18px;
+}
+
+.card {
+  background: #e6dddc;
+  padding: 18px;
+  border-radius: 10px;
+}
+
+.hidden { display: none; }
+
+.btn {
+  border: 1px solid #a99;
+  background: #f6f1f1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.05s ease;
+}
+.btn:active { transform: scale(0.98); }
+
+.primary {
+  background: #55b7b7;
+  color: white;
+  border-color: #3aa2a2;
+  font-weight: 600;
+}
+
+.quoteRow {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.bigQuoteMark {
+  font-size: 90px;
+  line-height: 1;
+  color: #6f7a7a;
+  margin-top: -10px;
+}
+
+.quoteText {
+  margin: 0;
+  font-size: 28px;
+  color: #616c6c;
+  line-height: 1.2;
+}
+
+.quoteAuthor {
+  margin: 10px 0 0;
+  color: #55b7b7;
+  font-weight: 600;
+  text-align: right;
+}
+
+.actions {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.info {
+  margin: 10px 0 0;
+  color: #4c5454;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+.form.row {
+  grid-template-columns: 1fr auto auto;
+  align-items: end;
+}
+
+label { display: grid; gap: 6px; color: #3e4747; }
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #b8a6a2;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #b8a6a2;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
