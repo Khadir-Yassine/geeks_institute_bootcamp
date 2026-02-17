@@ -1,0 +1,119 @@
+<!-- EXCERCICE 1 -->
+html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple GET Form</title>
+</head>
+
+<body>
+
+  <h2>Contact Form</h2>
+
+  <!-- 
+    The form uses GET method.
+    action="" means the form sends data to the SAME HTML file.
+  -->
+  <form method="GET" action="">
+
+    <!-- Small text input asking for name -->
+    <label>Enter your name:</label><br>
+    <input type="text" name="name" placeholder="Your name"><br><br>
+
+    <!-- Larger textarea for message -->
+    <label>Write your message:</label><br>
+    <textarea name="message" rows="5" cols="30" placeholder="Your message"></textarea><br><br>
+
+    <!-- Submit button -->
+    <input type="submit" value="Send">
+
+  </form>
+
+  <!-- 
+    When the user clicks "Send":
+    Because we use GET, the data appears in the browser URL.
+
+  -->
+</body>
+
+</html>
+
+
+<!-- EXCERCICE 2 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>POST Form</title>
+</head>
+
+<body>
+
+  <h2>Contact Form</h2>
+
+  <!-- 
+    The form now uses POST instead of GET.
+    action="" means the data is sent to the SAME HTML file.
+  -->
+  <form method="POST" action="">
+
+    <!-- Small text input -->
+    <label>Enter your name:</label><br>
+    <input type="text" name="name" placeholder="Your name"><br><br>
+
+    <!-- Larger textarea -->
+    <label>Write your message:</label><br>
+    <textarea name="message" rows="5" cols="30" placeholder="Your message"></textarea><br><br>
+
+    <!-- Submit button -->
+    <input type="submit" value="Send">
+
+  </form>
+
+  <!-- 
+    When you click "Send" with POST:
+    The data is sent inside the HTTP request body.
+  -->
+
+</body>
+
+</html>
+
+
+<!-- EXCERCICE 3 -->
+<script>
+  const marioGame = {
+    detail: "An amazing game!",
+    characters: {
+      mario: {
+        description: "Small and jumpy. Likes princesses.",
+        height: 10,
+        weight: 3,
+        speed: 12,
+      },
+      bowser: {
+        description: "Big and green, Hates princesses.",
+        height: 16,
+        weight: 6,
+        speed: 4,
+      },
+      princessPeach: {
+        description: "Beautiful princess.",
+        height: 12,
+        weight: 2,
+        speed: 2,
+      }
+    }
+  };
+
+  const jsonGame = JSON.stringify(marioGame, null, 2);
+
+  console.log("Pretty JSON:");
+  console.log(jsonGame);
+
+  const backToObject = JSON.parse(jsonGame);
+  console.log("Back to JS object:", backToObject);
+
+  debugger;
+</script>
