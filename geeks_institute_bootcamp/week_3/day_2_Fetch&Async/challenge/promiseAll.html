@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sunrise (Promise.all)</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; }
+    form { display: grid; gap: 10px; max-width: 520px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    input, button { padding: 10px; }
+    #result { margin-top: 16px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+    .error { color: #b00020; }
+    small { opacity: .7; }
+  </style>
+</head>
+<body>
+
+  <h2>Sunrise time for 2 cities (Promise.all)</h2>
+  <small>API: https://sunrise-sunset.org/api</small>
+
+  <form id="form">
+    <h3>City 1</h3>
+    <div class="row">
+      <input id="lat1" type="number" step="any" placeholder="Latitude 1" value="48.864716" required>
+      <input id="lng1" type="number" step="any" placeholder="Longitude 1" value="2.349014" required>
+    </div>
+
+    <h3>City 2</h3>
+    <div class="row">
+      <input id="lat2" type="number" step="any" placeholder="Latitude 2" value="40.730610" required>
+      <input id="lng2" type="number" step="any" placeholder="Longitude 2" value="-73.935242" required>
+    </div>
+
+    <button type="submit">Get Sunrise</button>
+  </form>
+
+  <div id="result">Fill the inputs and click "Get Sunrise".</div>
+
+  <script>
+    const form = document.getElementById("form");
+    const resultBox = document.getElementById("result");
+
+    function fetchSunrise(lat, lng) {
+      const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`;
+
+      return fetch(url)
+        .then(res => {
+          if (!res.ok) throw new Error("Network error: " + res.status);
+          return res.json();
+        })
+        .then(data => {
+          if (data.status !== "OK") throw new Error("API error: " + data.status);
+          return data.results.sunrise;
+        });
+    }
+
+    function formatTimeUTC(isoString) {
+      const d = new Date(isoString);
+
+      return d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" }) + " UTC";
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const lat1 = document.getElementById("lat1").value;
+      const lng1 = document.getElementById("lng1").value;
+      const lat2 = document.getElementById("lat2").value;
+      const lng2 = document.getElementById("lng2").value;
+
+      resultBox.textContent = "Loading...";
+
+      const p1 = fetchSunrise(lat1, lng1);
+      const p2 = fetchSunrise(lat2, lng2);
+
+      Promise.all([p1, p2])
+        .then(([sunrise1, sunrise2]) => {
+          resultBox.innerHTML = `
+            <p><b>City 1 Sunrise:</b> ${formatTimeUTC(sunrise1)}</p>
+            <p><b>City 2 Sunrise:</b> ${formatTimeUTC(sunrise2)}</p>
+          `;
+        })
+        .catch(err => {
+          resultBox.innerHTML = `<p class="error">${err.message}</p>`;
+        });
+    });
+  </script>
+
+</body>
+</html>
