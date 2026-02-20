@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Giphy by Category</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 16px; }
+    form { display: flex; gap: 8px; margin-bottom: 12px; }
+    input { padding: 8px; width: 260px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    #gifs { display: grid; gap: 12px; margin-top: 12px; }
+    .gif-card { display: flex; align-items: center; gap: 12px; }
+    .gif-card img { max-width: 240px; border-radius: 8px; }
+    .danger { background: #f3f3f3; border: 1px solid #ccc; }
+    .small { font-size: 12px; opacity: 0.8; margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+  <h2>Giphy Random GIF by Category</h2>
+
+  <form id="gif-form">
+    <input id="category" type="text" placeholder="Type a category (ex: sun)" required />
+    <button type="submit">Get GIF</button>
+    <button type="button" id="delete-all" class="danger">DELETE ALL</button>
+  </form>
+
+  <div class="small">
+    Uses GIPHY Random Endpoint: /v1/gifs/random with the "tag" parameter. :contentReference[oaicite:0]{index=0}
+  </div>
+
+  <div id="gifs"></div>
+
+  <script>
+    const API_KEY = "hpvZycW22qCjn5cRM1xtWB8NKq4dQ2My";
+    const form = document.getElementById("gif-form");
+    const input = document.getElementById("category");
+    const gifsBox = document.getElementById("gifs");
+    const deleteAllBtn = document.getElementById("delete-all");
+
+    function buildRandomUrl(tag) {
+      const url = new URL("https://api.giphy.com/v1/gifs/random");
+      url.searchParams.set("api_key", API_KEY);
+      url.searchParams.set("tag", tag);      
+      url.searchParams.set("rating", "g");   
+      return url.toString();
+    }
+
+    async function fetchRandomGif(tag) {
+      const res = await fetch(buildRandomUrl(tag));
+      if (!res.ok) throw new Error("Network error: " + res.status);
+
+      const data = await res.json();
+
+      const gif = data.data;
+
+      if (!gif || !gif.images) {
+        throw new Error('No GIF found for: "' + tag + '"');
+      }
+
+      const imgUrl =
+        (gif.images.fixed_height && gif.images.fixed_height.url) ||
+        (gif.images.original && gif.images.original.url);
+
+      if (!imgUrl) throw new Error("GIF image URL not found in response");
+
+      return imgUrl;
+    }
+
+    function addGifToPage(imgUrl, tag) {
+      const card = document.createElement("div");
+      card.className = "gif-card";
+
+      const img = document.createElement("img");
+      img.src = imgUrl;
+      img.alt = tag;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "DELETE";
+      delBtn.className = "danger";
+      delBtn.addEventListener("click", () => {
+        card.remove(); 
+      });
+
+      card.appendChild(img);
+      card.appendChild(delBtn);
+      gifsBox.prepend(card);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const tag = input.value.trim();
+      if (!tag) return;
+
+      try {
+        const imgUrl = await fetchRandomGif(tag);
+        addGifToPage(imgUrl, tag);
+        input.value = "";
+        input.focus();
+      } catch (err) {
+        console.log(err.message);
+        alert(err.message);
+      }
+    });
+
+    deleteAllBtn.addEventListener("click", () => {
+      gifsBox.innerHTML = "";
+    });
+  </script>
+</body>
+</html>
