@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrapper">
+      <header class="top">
+        <img
+          class="logo"
+          src="https://github.com/devtlv/studentsGitHub/blob/master/JS/Week%205/Day%205/Mini%20Projects/Mini-Project%202%20-%20Pokedex%20API/logo.png?raw=true"
+          alt="Pokemon logo"
+        />
+      </header>
+
+      <section class="pokedex">
+
+        <img
+          class="pokedex-bg"
+          src="https://github.com/devtlv/studentsGitHub/blob/master/JS/Week%205/Day%205/Mini%20Projects/Mini-Project%202%20-%20Pokedex%20API/pokedex.png?raw=true"
+          alt="Pokedex"
+        />
+
+        <div class="screen">
+          <div id="loader" class="loader hidden">Loading...</div>
+          <div id="error" class="error hidden">Oh no! That Pokemon isn’t available…</div>
+          <img id="poke-img" class="poke-img hidden" alt="Pokemon" />
+        </div>
+
+        <div class="info">
+          <h2 id="poke-name" class="name">—</h2>
+          <p id="poke-id" class="line">Pokemon n° —</p>
+          <p id="poke-height" class="line">Height: —</p>
+          <p id="poke-weight" class="line">Weight: —</p>
+          <p id="poke-type" class="line">Type: —</p>
+        </div>
+
+        <div class="controls">
+          <button id="btn-prev" class="btn btn-prev" aria-label="Previous Pokemon"></button>
+          <button id="btn-random" class="btn btn-random" aria-label="Random Pokemon"></button>
+          <button id="btn-next" class="btn btn-next" aria-label="Next Pokemon"></button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
