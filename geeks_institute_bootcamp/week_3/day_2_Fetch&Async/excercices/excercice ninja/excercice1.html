@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Giphy Search</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    form { margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+    input { padding: 8px; width: 240px; }
+    button { padding: 8px 12px; cursor: pointer; }
+    #gif-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    #gif-container img { width: 200px; height: auto; border-radius: 8px; }
+  </style>
+</head>
+
+<body>
+  <h1>Search GIFs by Category</h1>
+
+
+  <form id="gif-form">
+    <input id="category-input" type="text" placeholder="" required />
+    <button type="submit">Search GIFs</button>
+
+    <button type="button" id="delete-btn">Delete All GIFs</button>
+  </form>
+
+  <div id="gif-container"></div>
+
+  <script>
+    const apiKey = "n3p2bbVho0BuW9XY80MWtd3yyPrkKH4V";
+    const form = document.getElementById("gif-form");
+    const input = document.getElementById("category-input");
+    const gifContainer = document.getElementById("gif-container");
+    const deleteBtn = document.getElementById("delete-btn");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault(); 
+
+      const category = input.value.trim();
+
+      if (!category) return;
+      const url = `https://api.giphy.com/v1/gifs/search?q=${encodeURIComponent(category)}&limit=10&rating=g&api_key=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("HTTP Error! Status: " + response.status);
+        }
+
+        const data = await response.json();
+        const gifs = data.data;
+        gifs.forEach((gifObj) => {
+          const gifUrl = gifObj.images.original.url;
+          const img = document.createElement("img");
+          img.src = gifUrl;
+          img.alt = category + " gif";
+
+          gifContainer.appendChild(img);
+        });
+
+        input.value = "";
+
+      } catch (error) {
+        console.error("Error fetching gifs:", error);
+      }
+    });
+    deleteBtn.addEventListener("click", () => {
+      gifContainer.innerHTML = "";
+    });
+  </script>
+</body>
+</html>
