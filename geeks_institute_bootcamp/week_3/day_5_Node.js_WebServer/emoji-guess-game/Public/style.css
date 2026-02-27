@@ -1,0 +1,98 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 650px;
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.label { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.score {
+  font-weight: bold;
+  background: #eef2ff;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.game {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+}
+
+.emoji {
+  font-size: 80px;
+  text-align: center;
+  margin: 10px 0 18px;
+}
+
+.options {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.option {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.option:hover { background: #fafafa; }
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn.secondary { background: #64748b; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.feedback {
+  min-height: 22px;
+  margin: 10px 0 0;
+  font-weight: bold;
+}
+
+.leaderboard { padding-left: 20px; }

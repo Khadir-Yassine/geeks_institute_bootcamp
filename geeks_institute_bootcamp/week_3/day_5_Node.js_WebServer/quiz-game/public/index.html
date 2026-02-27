@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Quiz Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Simple Quiz Game</h1>
+
+    <div id="topInfo" class="top-info">
+      <span id="progressText">Question 1/1</span>
+      <span id="scoreText">Score: 0</span>
+    </div>
+
+    <section id="quizArea">
+      <h2 id="questionText">Loading question...</h2>
+      <form id="choicesForm" class="choices"></form>
+
+      <button id="submitBtn" class="btn" disabled>Submit</button>
+
+      <p id="feedback" class="feedback"></p>
+      <button id="nextBtn" class="btn secondary" style="display:none;">Next</button>
+    </section>
+
+    <section id="resultArea" style="display:none;">
+      <h2>Quiz Finished 🎉</h2>
+      <p id="finalScore"></p>
+      <button id="restartBtn" class="btn">Restart</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
